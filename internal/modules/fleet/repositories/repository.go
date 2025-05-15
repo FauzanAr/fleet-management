@@ -61,3 +61,17 @@ func (r FleetRepository) GetFleetHistory(ctx context.Context, query fleetentity.
 
 	return &data, nil
 }
+
+func (r FleetRepository) InsertFleet(ctx context.Context, payload fleetentity.Fleet) error {
+	err := r.db.
+		GetDatabase().
+		Create(&payload).
+		Error
+
+	if err != nil {
+		r.log.Error(ctx, "Error inserting fleet", err, nil)
+		return wrapper.InternalServerError("Error inserting fleet", nil)
+	}
+
+	return nil
+}

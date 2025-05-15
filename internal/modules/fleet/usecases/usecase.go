@@ -58,3 +58,19 @@ func (fu FleetUsecase) GetFleetHistory(ctx context.Context, payload fleetmodel.F
 
 	return &res, nil
 }
+
+func (fu FleetUsecase) InsertFleet(ctx context.Context, payload fleetmodel.FleetInsertRequest) error {
+	var data fleetentity.Fleet
+
+	data.VehicleId = payload.VehicleID
+	data.Latitude = payload.Latitude
+	data.Longitude = payload.Longitude
+	data.Timestamp = payload.Timestamp
+
+	err := fu.fr.InsertFleet(ctx, data)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

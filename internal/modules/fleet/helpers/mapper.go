@@ -8,8 +8,8 @@ import (
 func ToFleetResponse(f fleetentity.Fleet) fleetmodel.FleetResponse {
 	return fleetmodel.FleetResponse{
 		VehicleId: f.VehicleId,
-		Latitude: f.Latitude,
-		Logitude: f.Logitude,
+		Latitude:  f.Latitude,
+		Logitude:  f.Longitude,
 		Timestamp: f.Timestamp,
 	}
 }

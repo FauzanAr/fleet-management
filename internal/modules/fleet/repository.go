@@ -9,4 +9,5 @@ import (
 type Repository interface {
 	GetFleet(context.Context, string) (*fleetentity.Fleet, error)
 	GetFleetHistory(context.Context, fleetentity.FleetHistoryQuery) (*[]fleetentity.Fleet, error)
+	InsertFleet(context.Context, fleetentity.Fleet) error
 }

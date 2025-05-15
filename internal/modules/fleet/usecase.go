@@ -9,4 +9,5 @@ import (
 type Usecase interface {
 	GetFleet(context.Context, fleetmodel.FleetLastLocationRequest) (*fleetmodel.FleetResponse, error)
 	GetFleetHistory(context.Context, fleetmodel.FleetHistoryRequest) (*[]fleetmodel.FleetResponse, error)
+	InsertFleet(context.Context, fleetmodel.FleetInsertRequest) error
 }

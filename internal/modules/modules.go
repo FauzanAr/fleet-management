@@ -8,7 +8,7 @@ import (
 	fleethandler "github.com/FauzanAr/fleet-management/internal/modules/fleet/handlers"
 	fleetrepository "github.com/FauzanAr/fleet-management/internal/modules/fleet/repositories"
 	fleetusecase "github.com/FauzanAr/fleet-management/internal/modules/fleet/usecases"
-	"github.com/FauzanAr/fleet-management/internal/pkg/databases/psql"
+	postgres "github.com/FauzanAr/fleet-management/internal/pkg/databases/psql"
 	"github.com/FauzanAr/fleet-management/internal/pkg/logger"
 )
 
