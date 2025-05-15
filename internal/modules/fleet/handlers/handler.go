@@ -35,13 +35,13 @@ func (h *FleetHandler) LastLocation(c *gin.Context) {
 
 	request.VehicleId = vehicleId
 
-	err := h.fu.GetFleet(ctx, request)
+	response, err := h.fu.GetFleet(ctx, request)
 	if err != nil {
 		wrapper.SendErrorResponse(c, err, nil, http.StatusBadRequest)
 		return
 	}
 
-	wrapper.SendSuccessResponse(c, "Success", nil, http.StatusOK)
+	wrapper.SendSuccessResponse(c, "Success", response, http.StatusOK)
 	return
 }
 
@@ -51,6 +51,12 @@ func (h *FleetHandler) History(c *gin.Context) {
 
 	startStr := c.Query("start")
 	endStr := c.Query("end")
+	vehicleId := c.Param("vehicle_id")
+
+	if vehicleId == "" {
+		wrapper.SendErrorResponse(c, wrapper.ValidationError("vehicle_id path param is required"), nil, http.StatusBadRequest)
+		return
+	}
 
 	if startStr == "" || endStr == "" {
 		wrapper.SendErrorResponse(c, wrapper.ValidationError("start or end query params are required"), nil, http.StatusBadRequest)
@@ -69,20 +75,21 @@ func (h *FleetHandler) History(c *gin.Context) {
 		return
 	}
 
-	if end > start {
+	if end < start {
 		wrapper.SendErrorResponse(c, wrapper.ValidationError("end query param must be greater than start"), nil, http.StatusBadRequest)
 		return
 	}
 
 	request.Start = start
 	request.End = end
+	request.VehicleId = vehicleId
 
-	err = h.fu.GetFleetHistory(ctx, request)
+	response, err := h.fu.GetFleetHistory(ctx, request)
 	if err != nil {
 		wrapper.SendErrorResponse(c, err, nil, http.StatusBadRequest)
 		return
 	}
 
-	wrapper.SendSuccessResponse(c, "Success", nil, http.StatusOK)
+	wrapper.SendSuccessResponse(c, "Success", response, http.StatusOK)
 	return
 }

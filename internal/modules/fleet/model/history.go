@@ -1,6 +1,7 @@
 package fleetmodel
 
 type FleetHistoryRequest struct {
-	Start int64 `json:"start"`
-	End   int64 `json:"end"`
+	Start     int64
+	End       int64
+	VehicleId string
 }
