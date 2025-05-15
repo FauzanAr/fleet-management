@@ -28,6 +28,7 @@ func (r FleetRepository) GetFleet(ctx context.Context, vehicleId string) (*fleet
 	err := r.db.
 		GetDatabase().
 		Where("vehicle_id = ?", vehicleId).
+		Order("timestamp ASC").
 		First(&data).
 		Error
 
