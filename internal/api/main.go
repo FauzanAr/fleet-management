@@ -12,7 +12,7 @@ import (
 
 	"github.com/FauzanAr/fleet-management/internal/config"
 	"github.com/FauzanAr/fleet-management/internal/modules"
-	"github.com/FauzanAr/fleet-management/internal/pkg/databases/psql"
+	postgres "github.com/FauzanAr/fleet-management/internal/pkg/databases/psql"
 	"github.com/FauzanAr/fleet-management/internal/pkg/logger"
 	"github.com/FauzanAr/fleet-management/internal/pkg/middleware"
 	"github.com/FauzanAr/fleet-management/internal/pkg/validator"
@@ -54,7 +54,7 @@ func StartServer() {
 		<-quit
 		log.Info(ctx, "Server is shutting down...", nil)
 
-		ctx, cancel := context.WithTimeout(ctx, 10 * time.Second)
+		ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 		defer cancel()
 
 		if err := httpServer.Shutdown(ctx); err != nil {
@@ -74,7 +74,7 @@ func StartServer() {
 	appModules.Init()
 
 	// init MQTT modules
-	appModules.InitMQTT()
+	appModules.InitMQTT(conf)
 
 	if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Error(ctx, "Unable to start server", err, nil)
