@@ -25,15 +25,16 @@ func NewFleetMQTTHandler(log logger.Logger, uc fleet.Usecase) FleetMQTTHandler {
 func (h *FleetMQTTHandler) SubscriberLastLocation(c mqtt.Client, msg mqtt.Message) {
 	var payload fleetmodel.FleetInsertRequest
 	ctx := context.Background()
+	h.log.Info(ctx, "New message incoming", nil)
 
 	err := json.Unmarshal(msg.Payload(), &payload)
 	if err != nil {
-		h.log.Error(nil, "Invalid MQTT payload", err, nil)
+		h.log.Error(ctx, "Invalid MQTT payload", err, nil)
 		return
 	}
 
 	if payload.VehicleID == "" {
-		h.log.Error(nil, "Invalid vehicle_id", err, nil)
+		h.log.Error(ctx, "Invalid vehicle_id", err, nil)
 		return
 	}
 

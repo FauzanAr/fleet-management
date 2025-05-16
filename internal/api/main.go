@@ -68,7 +68,13 @@ func StartServer() {
 		wrapper.SendSuccessResponse(c, "Server Up and Running", nil, http.StatusOK)
 	})
 
-	modules.NewModules(ctx, server, log, db).Init()
+	appModules := modules.NewModules(ctx, server, log, db)
+
+	// Init api modules
+	appModules.Init()
+
+	// init MQTT modules
+	appModules.InitMQTT()
 
 	if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Error(ctx, "Unable to start server", err, nil)
